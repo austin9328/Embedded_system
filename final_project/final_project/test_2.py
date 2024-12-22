@@ -1,79 +1,30 @@
 import cv2
 import numpy as np
-from scipy.ndimage import binary_erosion, binary_dilation
-
-
-def count_lines(image, offset=20):
-    """
-    找出最小的兩個長度，並用來設置動態閾值，統計直線數量。
-    
-    參數:
-    - image: 圖像數據（已二值化處理）
-    - offset: 在最小兩個長度基礎上加的偏移量
-    
-    回傳:
-    - 直線數量
-    """
-    # 確認 image 不為 None
+import search
+def mark_coordinates(image_path, coordinates):
+    # 讀取圖像
+    image = cv2.imread(image_path)
     if image is None:
-        print("Error: 圖像數據為 None。")
+        print("未能讀取圖像。請檢查圖像路徑。")
         return
-    
-    # 連通區域分析
-    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(image, connectivity=8)
-    
-    # 計算所有區域的長度（寬度和高度）
-    lengths = []
-    for i in range(1, num_labels):  # 0 是背景，不需要處理
-        width = stats[i, cv2.CC_STAT_WIDTH]
-        height = stats[i, cv2.CC_STAT_HEIGHT]
-        lengths.append(max(width, height))  # 取寬和高中的較大值作為長度
-    '''    
-    # 找出最小的兩個長度
-    if len(lengths) >= 2:
-        sorted_lengths = sorted(lengths)  # 排序長度列表
-        min1, min2 = sorted_lengths[:2]  # 取出最小的兩個長度
-        length_threshold = (min1 + min2)/3 + offset  # 動態閾值 = 最小兩個長度相加 + 偏移量
-    else:
-        print("未檢測到足夠的連通區域。")
-        return 0
 
-    print(f"最小的兩個長度: {min1}, {min2}")
-    print(f"動態計算的長度閾值: {length_threshold}")
-    '''    
-    length_threshold = offset
-    # 統計符合條件的直線數量
-    line_count = sum(1 for l in lengths if l >= length_threshold)
-    
-    print(f"統計直線數量: {line_count}")
-    return line_count
+    for i, coord in enumerate(coordinates):
+        # 確保每個座標是一對 (x, y) 數值
+        x, y = int(coord[0][0]), int(coord[0][1])
+
+        # 標記點
+        cv2.circle(image, (x, y), 5, (0, 0, 255), -1)
+        # 標記序號
+        cv2.putText(image, str(i + 1), (x + 10, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+
+    # 保存並顯示標記後的圖像
+    cv2.imwrite('marked_image.jpg', image)
+    cv2.imshow('Marked Image', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 # 主程序
 if __name__ == "__main__":
-    # 設定圖像文件路徑
-    image_pathx = './photo/sobelx.jpg'  # 確保此文件存在於指定路徑
-    image_pathy = './photo/sobely.jpg'
-    
-    # 讀取並進行灰度處理
-    imagex = cv2.imread(image_pathx, cv2.IMREAD_GRAYSCALE)
-    imagey = cv2.imread(image_pathy, cv2.IMREAD_GRAYSCALE)
-    
-    # 二值化處理
-    _, binaryx = cv2.threshold(imagex, 127, 255, cv2.THRESH_BINARY)
-    _, binaryy = cv2.threshold(imagey, 127, 255, cv2.THRESH_BINARY)    
-    # 創建一個 5x5 的結構元素
-    #interpolation_method = cv2.INTER_CUBIC  # 插值方法，可選 INTER_NEAREST, INTER_LINEAR, INTER_CUBIC, 等
-    #imagex = split_image.resize_image(imagex,4,interpolation_method)
-    #imagey = split_image.resize_image(imagey,4,interpolation_method)
-    kernel = np.ones((11, 11), np.uint8)
-    
-    # 進行二值膨脹操作
-    openedx = binary_dilation(binaryx, structure=kernel).astype(np.uint8)
-    openedy = binary_dilation(binaryy, structure=kernel).astype(np.uint8)    
-    cv2.imwrite('sobolx_mor.jpg',openedx)
-    cv2.imwrite('sobely_mor.jpg',openedy)
-    # 計算符合條件的直線數量
-    line_countx = count_lines(openedx, offset=20)
-    line_county = count_lines(openedy, offset=20)
-    line_count = line_countx + line_county
-    print(f'total = {line_count}')
+    # 假設這是你的座標列表
+    xy_list =search.search()
+    mark_coordinates('./photo/output_image.jpg', xy_list)  # 將繪製了輪廓的圖像保存為'output_image.jpg'
