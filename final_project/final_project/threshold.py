@@ -24,10 +24,10 @@ def threshold(image, thresh, maxval):
 if __name__ == "__main__":
     import cv2
     # 讀取圖像並轉為灰階
-    gray = cv2.imread('./photo/test_2.jpg', cv2.IMREAD_GRAYSCALE)
+    gray = cv2.imread('./unit_test/input/test_p.jpg', cv2.IMREAD_GRAYSCALE)
     
     # 自製二值化函數
     binary = threshold(gray, 127, 255)
      
-    # 顯示結果
-    cv2.imwrite("./photo/Binary.jpg", binary)
+    # 儲存結果
+    cv2.imwrite("./unit_test/output/Binary.jpg", binary)

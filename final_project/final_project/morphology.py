@@ -26,7 +26,7 @@ if __name__ == "__main__":
     import cv2
     
     # 讀取灰階圖像並進行二值化
-    gray = cv2.imread('./photo/Binary.jpg', cv2.IMREAD_GRAYSCALE)
+    gray = cv2.imread('./unit_test/input/Binary.jpg', cv2.IMREAD_GRAYSCALE)
     _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
     
     # 創建一個 5x5 的結構元素
@@ -39,8 +39,5 @@ if __name__ == "__main__":
     opened_cv = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
     
     # 顯示結果
-    cv2.imwrite('morphology.jpg',opened_custom)
-    cv2.imshow("Custom Opening", opened_custom)
-    cv2.imshow("OpenCV Opening", opened_cv)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    cv2.imwrite('./unit_test/output/morphology.jpg',opened_custom)
+

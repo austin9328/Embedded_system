@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy.ndimage import binary_erosion, binary_dilation
 
-def sobel_and_morphology(img):
+def sobel(img):
     """
     Sobel operator with morphological processing
     
@@ -32,15 +32,15 @@ def sobel_and_morphology(img):
 if __name__ == "__main__":
  
     # 讀取輸入圖像
-    img = cv2.imread('./photo/four.jpg')  # 讀取名稱為'test.jpg'的圖像文件
+    img = cv2.imread('./unit_test/input/sobel.jpg')  # 讀取名稱為'test.jpg'的圖像文件
 
     # 將圖像轉換為灰度圖像
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 將彩色圖像轉換為灰度圖像
     kernel = np.ones((3, 3), np.uint8)
     # 取得 Sobel 邊緣圖像
-    sobelx, sobely = sobel_and_morphology(gray)
+    sobelx, sobely = sobel(img)
 
     # 保存輸出圖像
-    cv2.imwrite('./photo/sobelx.jpg', sobelx)  
-    cv2.imwrite('./photo/sobely.jpg', sobely)  
+    cv2.imwrite('./unit_test/output/sobelx.jpg', sobelx)  
+    cv2.imwrite('./unit_test/output/sobely.jpg', sobely)  
 

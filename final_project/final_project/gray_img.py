@@ -24,13 +24,13 @@ def bgr_to_gray(img):
 if __name__ == "__main__":
     import cv2
     # 讀取圖片
-    img = cv2.imread('./photo/test.jpg')
+    img = cv2.imread('./unit_test/input/test_p.jpg')
     
     # 自製函數轉換
     #gray_img = bgr_to_gray(img)
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     # 顯示結果
-    cv2.imshow("Gray Image", gray_img)
+    cv2.imwrite("./unit_test/output/Gray_image.jpg", gray_img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
