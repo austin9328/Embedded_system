@@ -16,7 +16,7 @@ import calculate_total_price
 start_time = time.time()
 
 # 讀取輸入圖像
-img = cv2.imread('./test/test_all3.jpg')  # 讀取測試的圖片
+img = cv2.imread('./test/test_all2.jpg')  # 讀取測試的圖片
 
 # gray_img
 gray = gray_img.bgr_to_gray(img)
