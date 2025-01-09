@@ -14,12 +14,15 @@ import calculate_total_price
 
 # 記錄開始時間
 start_time = time.time()
-
+img1 = cv2.imread('./test/test_2.jpg')
 # 讀取輸入圖像
-img = cv2.imread('./test/test_all2.jpg')  # 讀取測試的圖片
+img2 = cv2.imread('./test/test_all2.jpg')  # 讀取測試的圖片
+
+if img1.shape != img2.shape:
+    img2 = cv2.resize(img2, (img1.shape[1], img1.shape[0])) # 將兩張圖片resize大小相同
 
 # gray_img
-gray = gray_img.bgr_to_gray(img)
+gray = gray_img.bgr_to_gray(img2)
 
 # threshold(手刻)
 binary = threshold.threshold(gray, 127, 255)
