@@ -15,3 +15,4 @@ def calculate_total_price(all_line, price_list):
     # 每項相加得到總金額
     total = sum(result)
     return total
+
