@@ -29,6 +29,8 @@
 ![image](https://github.com/user-attachments/assets/f6be234d-dc33-4493-ab58-f57744209517)
 ![image](https://github.com/user-attachments/assets/05105e77-556c-4d98-a414-d98772f01ce7)
 ![image](https://github.com/user-attachments/assets/b598a672-e4b6-420e-9813-eea11478d2b6)
+**demo影片**
+<[https://youtu.be/TJWmjVZtWT0]>
 
 ## 試試其他方式
 
